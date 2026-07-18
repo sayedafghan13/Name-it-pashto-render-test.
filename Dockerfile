@@ -6,11 +6,20 @@
 # a raqm-enabled Pillow on Linux when the prebuilt wheel doesn't include it.
 FROM python:3.11-slim
 
+# The full standard set Pillow's own docs list for building from source --
+# without these (zlib/libjpeg in particular), the build can fail outright or
+# silently produce a Pillow with broken/missing PNG or JPEG support.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libraqm-dev \
     libharfbuzz-dev \
     libfribidi-dev \
     libfreetype6-dev \
+    zlib1g-dev \
+    libjpeg62-turbo-dev \
+    libopenjp2-7-dev \
+    libtiff-dev \
+    liblcms2-dev \
+    libwebp-dev \
     pkg-config \
     gcc \
     && rm -rf /var/lib/apt/lists/*
